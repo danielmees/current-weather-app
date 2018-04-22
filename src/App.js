@@ -47,20 +47,20 @@ export default class App extends Component {
   render() {
     return (
       <div>
-      <div className={style.tab}>
-        <button
-          className={this.state.activeNavs[0] ? style.active : ''}
-          onClick={() => { this.fetchWeatherData('3000'); this.handleNavClick(0); }}
-        >Melbourne</button>
-        <button
-          className={this.state.activeNavs[1] ? style.active : ''}
-          onClick={() => { this.fetchWeatherData('2000'); this.handleNavClick(1); }}
-        >Sydney</button>
-        <button
-          className={this.state.activeNavs[2] ? style.active : ''}
-          onClick={() => { this.fetchWeatherData('4000'); this.handleNavClick(2); }}
-        >Brisbane</button>
-      </div>
+        <div className={style.tab}>
+          <button
+            className={this.state.activeNavs[0] ? style.active : ''}
+            onClick={() => { this.fetchWeatherData('3000'); this.handleNavClick(0); }}
+          >Melbourne</button>
+          <button
+            className={this.state.activeNavs[1] ? style.active : ''}
+            onClick={() => { this.fetchWeatherData('2000'); this.handleNavClick(1); }}
+          >Sydney</button>
+          <button
+            className={this.state.activeNavs[2] ? style.active : ''}
+            onClick={() => { this.fetchWeatherData('4000'); this.handleNavClick(2); }}
+          >Brisbane</button>
+        </div>
         <DisplayWeather
           currentWeatherObj={this.state.currentWeatherObj}
           loading={this.state.loading}
