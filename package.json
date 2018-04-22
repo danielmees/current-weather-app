@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "react": "^15.1.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^15.1.0",
     "react-spinners": "^0.3.2"
   }
