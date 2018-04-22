@@ -1,5 +1,55 @@
 .container {
-  padding-top: 50px;
-  width: 80%;
-  text-align: center;
+  margin: 50px auto;
+  font-size: 16px;
+}
+
+.titleContainer {
+  margin: 50px auto;
+}
+
+.contentContainer {
+  width: 95%;
+  height: 95%;
+  margin : 0 auto;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: -1px -1px 3px 3px #ccc;
+}
+
+.tableContainer {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.tableContainer img {
+  display: table-cell;
+  width: 200px;
+  vertical-align: middle;
+}
+
+.tableContainer div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.listContainer {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.progressBar {
+  height: 20px;
+  width: 300px;
+  background-color: #f2f2f2;
+}
+
+p {
+  line-height: 200%;
+}
+
+p span {
+  font-size: 18px;
+  font-weight: 500;
 }

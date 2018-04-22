@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { RingLoader } from 'react-spinners';
 import { weatherIcons, weatherIconLookup } from './constants/LoadIcons';
-import WindCompassIcon from '../../images/windcompass.png';
+import WindCompassIcon from '../../images/WindCompass.png';
 import style from './Style.css';
 
 class DisplayWeather extends Component {
@@ -19,7 +20,8 @@ class DisplayWeather extends Component {
       dewPoint: '',
       visibility: '',
       seaLevelPressure: '',
-      loading: true
+      loading: true,
+      error: false,
     }
   }
 
@@ -36,7 +38,8 @@ class DisplayWeather extends Component {
       dewPoint: nextProps.currentWeatherObj.dewpoint_c,
       visibility: nextProps.currentWeatherObj.vis_km,
       seaLevelPressure: nextProps.currentWeatherObj.slp_mb,
-      loading: false
+      loading: nextProps.loading,
+      error: nextProps.error
     });
   }
 
@@ -48,55 +51,82 @@ class DisplayWeather extends Component {
 
     return (
       <Grid fluid className={style.container}>
-        <Row>
-          <Col xs={12} sm={12} md={12}>
-            <h2>Current Weather Report</h2>
+        <Row className={style.titleContainer}>
+          <Col xs={12} sm={12} mdOffset={1} md={10}>
+            <h1>Current Weather Report</h1>
           </Col>
         </Row>
-        {!this.state.loading &&
+        {this.state.loading &&
           <Row>
-            <Col xs={12} sm={6} md={6}>
-              <img src={weatherIcons[imageIconIndex]} />
-              <div>
-                <p>{this.state.temperature}&#8451;</p>
-                <p>Feels like {this.state.feelLikeTemp}&#8451;</p>
-                <p>{this.state.description}</p>
-              </div>
+            <Col xsOffset={3} xs={6} smOffset={5} sm={2} mdOffset={5} md={2}>
+              <RingLoader size={200} color="#000000"
+                loading={true}
+              />
             </Col>
-            <Col xs={12} sm={6} md={6}>
-              <img src={WindCompassIcon} />
-              <p>{this.state.maxWindSpeed} km/h</p>
-              <p>Comes from {this.state.windComesFrom}</p>
-            </Col>
-            <Col xs={12} sm={6} md={6}>
-              <p>Total Cloud</p>
-              <div className="progress align-middle" style={{height:'20px', width:'300px'}}>
-                <div className="progress-bar align-middle" role="progressbar"
-                  style={{width:`${this.state.totalCloud}%`,fontSize:'20px'}}
-                  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                >
-                  <span className="align-middle">{this.state.totalCloud}%</span>
-                </div>
-              </div>
-              <p>Humidity</p>
-              <div className="progress align-middle" style={{height:'20px', width:'300px'}}>
-                <div className="progress-bar align-middle" role="progressbar"
-                  style={{width:`${this.state.humidity}%`,fontSize:'20px'}}
-                  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                >
-                  <span className="align-middle">{this.state.humidity}%</span>
+          </Row>
+        }
+        {!this.state.loading && this.state.error &&
+          <Row>
+          <Col xs={12} sm={12} mdOffset={1} md={10}>
+            <h3>Oops! Something went wrong! please try again.</h3>
+          </Col>
+          </Row>
+        }
+        {!this.state.loading && !this.state.error &&
+          <Row>
+            <Col xs={12} sm={6} mdOffset={1} md={5}>
+              <div className={style.contentContainer}>
+                <div className={style.tableContainer}>
+                  <img src={weatherIcons[imageIconIndex]} />
+                  <div>
+                    <h4>Temperature &nbsp; {this.state.temperature}&#8451;</h4>
+                    <p>Feels like {this.state.feelLikeTemp}&#8451;</p>
+                    <p>{this.state.description}</p>
+                  </div>
                 </div>
               </div>
             </Col>
-            <Col>
-              <Col xs={12} sm={6} md={6}>
-                <p>Dew Point</p>
-                <p>{this.state.dewPoint}&#8451;</p>
-                <p>visibility</p>
-                <p>{this.state.visibility}km</p>
-                <p>Sea Level Pressure</p>
-                <p>{this.state.seaLevelPressure}mb</p>
-              </Col>
+            <Col xs={12} sm={6} md={5}>
+              <div className={style.contentContainer}>
+                <div className={style.tableContainer}>
+                  <img src={WindCompassIcon} />
+                  <div>
+                    <h4>Wind &nbsp; {this.state.maxWindSpeed} km/h</h4>
+                    <p>Comes from {this.state.windComesFrom}</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={12} sm={6} mdOffset={1} md={5}>
+              <div className={style.contentContainer}>
+                <div className={style.listContainer}>
+                  <h4>Total Cloud</h4>
+                  <div className="progress align-middle" className={style.progressBar}>
+                    <div className="progress-bar align-middle"
+                      style={{width:`${this.state.totalCloud}%`,fontSize:'18px'}}
+                    >
+                      <span className="align-middle">{this.state.totalCloud}%</span>
+                    </div>
+                  </div>
+                  <h4>Humidity</h4>
+                  <div className="progress align-middle" className={style.progressBar}>
+                    <div className="progress-bar align-middle"
+                      style={{width:`${this.state.humidity}%`,fontSize:'18px'}}
+                    >
+                      <span className="align-middle">{this.state.humidity}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={12} sm={6} md={5}>
+              <div className={style.contentContainer}>
+                <div className={style.listContainer}>
+                  <p><span>Dew Point</span> &nbsp; {this.state.dewPoint}&#8451;</p>
+                  <p><span>visibility</span> &nbsp; {this.state.visibility}km</p>
+                  <p><span>Sea Level Pressure</span> &nbsp; {this.state.seaLevelPressure}mb</p>
+                </div>
+              </div>
             </Col>
           </Row>
         }
@@ -107,6 +137,8 @@ class DisplayWeather extends Component {
 
 DisplayWeather.propTypes = {
   currentWeatherObj: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 export default DisplayWeather;
